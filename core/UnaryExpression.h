@@ -13,7 +13,7 @@ namespace core {
 		virtual ~UnaryExpression() = default;
 
 	protected:
-		virtual T evaluate(Expression<T>*)= 0;
+		virtual T evaluate(Expression<T>*) const = 0;
 
 	};
 

@@ -13,7 +13,7 @@ namespace core {
 		virtual ~BinaryExpression() = default;
 
 	protected:
-		virtual T evaluate(Expression<T>*, Expression<T>*)= 0;
+		virtual T evaluate(Expression<T>*, Expression<T>*) const = 0;
 
 	};
 
