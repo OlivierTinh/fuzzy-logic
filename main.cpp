@@ -1,8 +1,9 @@
 #include <iostream>
 #include "core/ValueModel.h"
+#include "fuzzy/And.h"
 
 using namespace core;
-// using namespace fuzzy;
+using namespace fuzzy;
 
 int main() {
 	ValueModel test_int(3);
