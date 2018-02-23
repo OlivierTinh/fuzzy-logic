@@ -20,7 +20,7 @@ int main() {
 	cout << test_double.evaluate() << endl;
 
 	// operators
-	NotMinus<int> opNot;
+	NotMinus<double> opNot;
 	AndMin<int> opAnd;
 	OrMax<int> opOr;
 	ThenMin<int> opThen;
