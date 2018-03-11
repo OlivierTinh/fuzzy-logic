@@ -14,7 +14,7 @@ namespace core {
 
 	public:
 		ExpressionFactory() = default;
-		virtual ~ExpressionFactory() = default;
+		virtual ~ExpressionFactory();
 
 		Expression<T>* hold(Expression<T>*);
 		Expression<T>* newUnary(UnaryExpression<T>*, Expression<T>*);
@@ -26,7 +26,12 @@ namespace core {
 	};
 
 	template<class T>
-	Expression<T> *ExpressionFactory<T>::hold(Expression<T> *) {
+	ExpressionFactory<T>::~ExpressionFactory() {
+		delete _memory;
+	}
+
+	template<class T>
+	Expression<T> *ExpressionFactory<T>::hold(Expression<T> *o) {
 		// TODO
 		return nullptr;
 	}

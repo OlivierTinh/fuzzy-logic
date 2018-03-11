@@ -48,3 +48,4 @@ namespace core {
 }
 
 #endif //FUZZY_UNARYEXPRESSIONMODEL_H
+
