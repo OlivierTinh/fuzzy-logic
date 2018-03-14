@@ -21,7 +21,9 @@ namespace fuzzy {
 
 	template<class T>
 	T AggPlus<T>::evaluate(Expression<T> *l, Expression<T> *r) const {
-		return l->evaluate() + r->evaluate();
+		T left = l->evaluate();
+		T right = r-> evaluate();
+		return left + right;
 	}
 
 }
