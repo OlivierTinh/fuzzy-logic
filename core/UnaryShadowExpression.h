@@ -1,6 +1,7 @@
 #ifndef FUZZY_UNARYSHADOWEXPRESSION_H
 #define FUZZY_UNARYSHADOWEXPRESSION_H
 
+#include <stdexcept>
 #include "UnaryExpression.h"
 
 namespace core {
@@ -25,8 +26,8 @@ namespace core {
 
 	template<class T>
 	T UnaryShadowExpression<T>::evaluate(Expression<T> *o) const {
-		if (_target != nullptr)
-			return _target->evaluate(o);
+		if (_target == nullptr) throw std::runtime_error("missing target unary expression");
+		return _target->evaluate(o);
 	}
 
 }

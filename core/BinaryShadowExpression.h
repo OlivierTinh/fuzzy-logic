@@ -1,6 +1,7 @@
 #ifndef FUZZY_BINARYSHADOWEXPRESSION_H
 #define FUZZY_BINARYSHADOWEXPRESSION_H
 
+#include <stdexcept>
 #include "BinaryExpression.h"
 
 namespace core {
@@ -25,8 +26,8 @@ namespace core {
 
 	template<class T>
 	T BinaryShadowExpression<T>::evaluate(Expression<T> *left, Expression<T> *right) const {
-		if (_target != nullptr)
-			return _target->evaluate(left, right);
+		if (_target == nullptr) throw std::runtime_error("missing target binary expression");
+		return _target->evaluate(left, right);
 	}
 
 }

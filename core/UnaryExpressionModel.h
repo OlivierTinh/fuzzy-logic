@@ -1,6 +1,8 @@
 #ifndef FUZZY_UNARYEXPRESSIONMODEL_H
 #define FUZZY_UNARYEXPRESSIONMODEL_H
 
+#include <bits/exception.h>
+#include <stdexcept>
 #include "UnaryExpression.h"
 #include "Expression.h"
 
@@ -11,7 +13,7 @@ namespace core {
 
 	public:
 		UnaryExpressionModel(UnaryExpression<T>*, Expression<T>*);
-		virtual ~UnaryExpressionModel();
+		virtual ~UnaryExpressionModel() = default;
 
 		T evaluate() const;
 		T evaluate(Expression<T>*) const;
@@ -27,22 +29,17 @@ namespace core {
 	_operator(__operator), _operand(operand)
 	{}
 
-	template<class T>
-	UnaryExpressionModel<T>::~UnaryExpressionModel() {
-		delete _operand;
-		delete _operator;
-	}
-
 	template <class T>
 	T UnaryExpressionModel<T>::evaluate() const {
-		if (_operand != nullptr)
-			return evaluate(_operand);
+		// TODO: créer NullOperatorException
+		if (_operand == nullptr) throw std::runtime_error("missing operand");
+		return evaluate(_operand);
 	}
 
 	template <class T>
 	T UnaryExpressionModel<T>::evaluate(Expression<T> *o) const {
-		if (_operator != nullptr)
-			return _operator->evaluate(o);
+		if (_operator == nullptr) throw std::runtime_error("missing operator");
+		return _operator->evaluate(o);
 	}
 
 }

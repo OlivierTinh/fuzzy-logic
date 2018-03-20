@@ -1,6 +1,7 @@
 #ifndef FUZZY_NARYSHADOWEXPRESSION_H
 #define FUZZY_NARYSHADOWEXPRESSION_H
 
+#include <stdexcept>
 #include "NaryExpression.h"
 
 namespace core {
@@ -25,8 +26,8 @@ namespace core {
 
 	template<class T>
 	T NaryShadowExpression<T>::evaluate(Expression<T>** operands) {
-		if (_target != nullptr)
-			return _target->evaluate(operands);
+		if (_target == nullptr) throw std::runtime_error("missing target nary expression");
+		return _target->evaluate(operands);
 	}
 
 }

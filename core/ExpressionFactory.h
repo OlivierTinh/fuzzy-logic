@@ -1,6 +1,7 @@
 #ifndef FUZZY_EXPRESSIONFACTORY_H
 #define FUZZY_EXPRESSIONFACTORY_H
 
+#include <set>
 #include "Expression.h"
 #include "UnaryExpression.h"
 #include "UnaryExpressionModel.h"
@@ -21,7 +22,7 @@ namespace core {
 		Expression<T>* newBinary(BinaryExpression<T>*, Expression<T>*, Expression<T>*);
 
 	private:
-		Expression<T>* _memory;
+		std::set<Expression<T>*> _memory;
 
 	};
 
@@ -31,19 +32,19 @@ namespace core {
 	}
 
 	template<class T>
-	Expression<T> *ExpressionFactory<T>::hold(Expression<T> *o) {
-		// TODO
-		return nullptr;
+	Expression<T>* ExpressionFactory<T>::hold(Expression<T> *o) {
+		_memory.insert(o);
+		return o;
 	}
 
 	template<class T>
-	Expression<T> *ExpressionFactory<T>::newUnary(UnaryExpression<T> *ope, Expression<T> *o) {
-		return new UnaryExpressionModel(ope, o);
+	Expression<T>* ExpressionFactory<T>::newUnary(UnaryExpression<T> *ope, Expression<T> *o) {
+		return hold(new UnaryExpressionModel<T>(ope, o));
 	}
 
 	template<class T>
-	Expression<T> *ExpressionFactory<T>::newBinary(BinaryExpression<T> *ope, Expression<T> *l, Expression<T> *r) {
-		return new BinaryExpressionModel(ope, l, r);
+	Expression<T>* ExpressionFactory<T>::newBinary(BinaryExpression<T> *ope, Expression<T> *l, Expression<T> *r) {
+		return hold(new BinaryExpressionModel<T>(ope, l, r));
 	}
 
 }

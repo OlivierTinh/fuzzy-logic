@@ -22,9 +22,18 @@ namespace fuzzy {
 	template<class T>
 	T CogDefuzz<T>::evaluate(Expression<T> *l, Expression<T> *r) const {
 		// TODO
+		// Shape<T>* shape = Evaluator<T>::BuildShape();
 		return nullptr;
 	}
 
 }
 
 #endif //FUZZY_COGDEFUZZ_H
+
+/*
+ * x intervalle à définir
+ * min, max, step
+ * sortie + règle d'agrégation
+ *
+ *
+ * */

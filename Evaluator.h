@@ -10,10 +10,10 @@ class Evaluator {
 public:
 	class EvalFunc {
 	public:
-		virtual T operator()(const T&)= 0;
+		virtual T operator()(const T&) = 0;
 	};
 
-	typedef std::pair<std::vector<T>, std::vector<T>> Shape;
+	typedef std::pair< std::vector<T>, std::vector<T> > Shape;
 
 	static Shape BuildShape(const T& min, const T&, const T&, EvalFunc&);
 	static std::ostream& PrintShape(std::ostream&, const Shape&);
