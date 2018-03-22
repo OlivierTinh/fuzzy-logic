@@ -18,8 +18,8 @@ namespace fuzzy {
 
 		virtual T evaluate(Expression<T>*, Expression<T>*);
 
-		virtual Evaluator<T>::Shape BuildShape() = 0;
-		virtual T defuzz(Evaluator<T>::Shape&) = 0;
+		virtual typename Evaluator<T>::Shape BuildShape() = 0;
+		virtual T defuzz(typename Evaluator<T>::Shape&) = 0;
 
 	private:
 		T _min, _max, _step;

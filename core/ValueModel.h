@@ -12,8 +12,8 @@ namespace core {
 		explicit ValueModel(const T &v=T());
 		virtual ~ValueModel() = default;
 
-		T evaluate() const;
-		void setValue(T);
+		virtual T evaluate() const;
+		virtual void setValue(T);
 
 	private:
 		T _value;

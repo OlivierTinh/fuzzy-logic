@@ -1,7 +1,6 @@
 #ifndef FUZZY_BINARYEXPRESSIONMODEL_H
 #define FUZZY_BINARYEXPRESSIONMODEL_H
 
-#include <stdexcept>
 #include "BinaryExpression.h"
 #include "Expression.h"
 #include "../NullOperatorException.h"
@@ -38,15 +37,14 @@ namespace core {
 
 	template<class T>
 	T BinaryExpressionModel<T>::evaluate() const {
-		// TODO : NullOperatorException
-		// if (_left == nullptr) throw new NullOperatorException("missing left expression");
-		if (_right == nullptr) throw std::runtime_error("missing right expression");
+		if (_left == nullptr) throw NullOperatorException("missing left expression", __LINE__);
+		if (_right == nullptr) throw NullOperatorException("missing right expression", __LINE__);
 		return evaluate(_left, _right);
 	}
 
 	template<class T>
 	T BinaryExpressionModel<T>::evaluate(Expression<T> *left, Expression<T> *right) const {
-		if (_operator == nullptr) throw std::runtime_error("missing operator");
+		if (_operator == nullptr) throw NullOperatorException("missing operator", __LINE__);
 		return _operator->evaluate(left, right);
 	}
 

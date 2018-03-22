@@ -1,8 +1,8 @@
 #ifndef FUZZY_BINARYSHADOWEXPRESSION_H
 #define FUZZY_BINARYSHADOWEXPRESSION_H
 
-#include <stdexcept>
 #include "BinaryExpression.h"
+#include "../NullOperatorException.h"
 
 namespace core {
 
@@ -11,22 +11,23 @@ namespace core {
 
 	public:
 		BinaryShadowExpression() = default;
-		virtual ~BinaryShadowExpression();
+		virtual ~BinaryShadowExpression() = default;
 
+		virtual void setTarget(BinaryExpression<T>*);
 		virtual T evaluate(Expression<T>*, Expression<T>*) const;
 
 	private:
 		BinaryExpression<T>* _target;
 	};
 
-	template<class T>
-	BinaryShadowExpression<T>::~BinaryShadowExpression() {
-		delete _target;
+	template <class T>
+	void BinaryShadowExpression<T>::setTarget(BinaryExpression<T>* target) {
+		_target = target;
 	}
 
 	template<class T>
 	T BinaryShadowExpression<T>::evaluate(Expression<T> *left, Expression<T> *right) const {
-		if (_target == nullptr) throw std::runtime_error("missing target binary expression");
+		if (_target == nullptr) throw NullOperatorException("missing target expression", __LINE__);
 		return _target->evaluate(left, right);
 	}
 

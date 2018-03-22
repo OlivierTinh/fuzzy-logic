@@ -7,6 +7,7 @@
 #include "UnaryExpressionModel.h"
 #include "BinaryExpression.h"
 #include "BinaryExpressionModel.h"
+#include "ValueModel.h"
 
 namespace core {
 
@@ -17,18 +18,26 @@ namespace core {
 		ExpressionFactory() = default;
 		virtual ~ExpressionFactory();
 
-		Expression<T>* hold(Expression<T>*);
-		Expression<T>* newUnary(UnaryExpression<T>*, Expression<T>*);
-		Expression<T>* newBinary(BinaryExpression<T>*, Expression<T>*, Expression<T>*);
+		virtual Expression<T>* hold(Expression<T>*);
+		virtual ValueModel<T>* NewValue(const T&);
+
+		typedef std::set<Expression<T>*> Memory;
+
+	protected:
+		virtual Expression<T>* newUnary(UnaryExpression<T>*, Expression<T>*);
+		virtual Expression<T>* newBinary(BinaryExpression<T>*, Expression<T>*, Expression<T>*);
+
+
 
 	private:
-		std::set<Expression<T>*> _memory;
+		Memory _memory;
 
 	};
 
 	template<class T>
 	ExpressionFactory<T>::~ExpressionFactory() {
-		delete _memory;
+		for (auto &&expression : _memory)
+			delete expression;
 	}
 
 	template<class T>

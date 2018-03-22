@@ -1,10 +1,9 @@
 #ifndef FUZZY_UNARYEXPRESSIONMODEL_H
 #define FUZZY_UNARYEXPRESSIONMODEL_H
 
-#include <bits/exception.h>
-#include <stdexcept>
 #include "UnaryExpression.h"
 #include "Expression.h"
+#include "../NullOperatorException.h"
 
 namespace core {
 
@@ -31,14 +30,13 @@ namespace core {
 
 	template <class T>
 	T UnaryExpressionModel<T>::evaluate() const {
-		// TODO: créer NullOperatorException
-		if (_operand == nullptr) throw std::runtime_error("missing operand");
+		if (_operand == nullptr) throw NullOperatorException("missing operand", __LINE__);
 		return evaluate(_operand);
 	}
 
 	template <class T>
 	T UnaryExpressionModel<T>::evaluate(Expression<T> *o) const {
-		if (_operator == nullptr) throw std::runtime_error("missing operator");
+		if (_operator == nullptr) throw NullOperatorException("missing operator", __LINE__);
 		return _operator->evaluate(o);
 	}
 

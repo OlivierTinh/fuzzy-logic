@@ -1,8 +1,8 @@
 #ifndef FUZZY_UNARYSHADOWEXPRESSION_H
 #define FUZZY_UNARYSHADOWEXPRESSION_H
 
-#include <stdexcept>
 #include "UnaryExpression.h"
+#include "../NullOperatorException.h"
 
 namespace core {
 
@@ -11,22 +11,23 @@ namespace core {
 
 	public:
 		UnaryShadowExpression() = default;
-		virtual ~UnaryShadowExpression();
+		virtual ~UnaryShadowExpression() = default;
 
+		virtual void setTarget(UnaryExpression<T>*);
 		virtual T evaluate(Expression<T>*) const;
 
 	private:
 		UnaryExpression<T>* _target;
 	};
 
-	template<class T>
-	UnaryShadowExpression<T>::~UnaryShadowExpression() {
-		delete _target;
+	template <class T>
+	void UnaryShadowExpression<T>::setTarget(UnaryExpression<T>* target) {
+		_target = target;
 	}
 
 	template<class T>
 	T UnaryShadowExpression<T>::evaluate(Expression<T> *o) const {
-		if (_target == nullptr) throw std::runtime_error("missing target unary expression");
+		if (_target == nullptr) throw NullOperatorException("missing target expression", __LINE__);
 		return _target->evaluate(o);
 	}
 
