@@ -9,7 +9,7 @@ using namespace core;
 namespace fuzzy {
 
 	template <class T>
-	class ThenMin : Then<T> {
+	class ThenMin : public Then<T> {
 
 	public:
 		ThenMin() = default;

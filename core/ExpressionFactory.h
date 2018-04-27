@@ -27,8 +27,6 @@ namespace core {
 		virtual Expression<T>* newUnary(UnaryExpression<T>*, Expression<T>*);
 		virtual Expression<T>* newBinary(BinaryExpression<T>*, Expression<T>*, Expression<T>*);
 
-
-
 	private:
 		Memory _memory;
 
@@ -54,6 +52,11 @@ namespace core {
 	template<class T>
 	Expression<T>* ExpressionFactory<T>::newBinary(BinaryExpression<T> *ope, Expression<T> *l, Expression<T> *r) {
 		return hold(new BinaryExpressionModel<T>(ope, l, r));
+	}
+
+	template<class T>
+	ValueModel<T> *ExpressionFactory<T>::NewValue(const T& value) {
+		return new ValueModel<T>(value);
 	}
 
 }

@@ -12,7 +12,6 @@ namespace core {
 		BinaryExpression() = default;
 		virtual ~BinaryExpression() = default;
 
-	protected:
 		virtual T evaluate(Expression<T>*, Expression<T>*) const = 0;
 
 	};

@@ -8,28 +8,23 @@ template <class T>
 class Evaluator {
 
 public:
-	class EvalFunc {
-	public:
-		virtual T operator()(const T&) = 0;
-	};
-
 	typedef std::pair< std::vector<T>, std::vector<T> > Shape;
 
-	static Shape BuildShape(const T& min, const T&, const T&, EvalFunc&);
+	static Shape BuildShape(const T&, const T&, const T&, Expression<T>*, const Expression<T>*);
 	static std::ostream& PrintShape(std::ostream&, const Shape&);
 
 };
 
 template<class T>
-typename Evaluator<T>::Shape Evaluator<T>::BuildShape(const T& min, const T& max, const T& step, EvalFunc& f) {
+typename Evaluator<T>::Shape Evaluator<T>::BuildShape(const T& min, const T& max, const T& step, Expression<T>* value, const Expression<T>* e) {
 	std::vector<T> x, y;
 
-	for (T i = 0; i <= max; ++i) {
-		y.push_back(f(i));
-		x.push_back(i);
+	for (T i = min; i <= max; i += step) {
+		x.push_back(value->evaluate());
+		y.push_back(e->evaluate());
 	}
 
-	return Evaluator::Shape(x, y);
+	return Shape(x, y);
 }
 
 template<class T>

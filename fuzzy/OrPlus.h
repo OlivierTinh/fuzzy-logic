@@ -9,7 +9,7 @@ using namespace core;
 namespace fuzzy {
 
 	template <class T>
-	class OrPlus : Or<T> {
+	class OrPlus : public Or<T> {
 
 	public:
 		OrPlus() = default;

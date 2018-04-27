@@ -7,55 +7,59 @@
 #include "fuzzy/ThenMin.h"
 #include "fuzzy/CogDefuzz.h"
 #include "fuzzy/IsTriangle.h"
+#include "fuzzy/FuzzyFactory.h"
+#include "fuzzy/AggMax.h"
 
 using namespace std;
 using namespace core;
 using namespace fuzzy;
 
 int main() {
-	ValueModel test_int(3);
-	cout << test_int.evaluate() << endl;
-
-	ValueModel test_double(-INT64_MAX);
-	cout << test_double.evaluate() << endl;
-
 	// operators
 	NotMinus<double> opNot;
-	AndMin<int> opAnd;
-	OrMax<int> opOr;
-	ThenMin<int> opThen;
-	//CogDefuzz<int> opDefuzz;
+	AndMin<double> opAnd;
+	OrMax<double> opOr;
+	ThenMin<double> opThen;
+	AggMax<double> opAgg;
+	CogDefuzz<double> opDefuzz;
 
 	// fuzzy expression factory
-	// FuzzyExpressionFactory f(&opNot, &opAnd, &opOr, &opThen, &opOr, &opDefuzz);
+	FuzzyFactory<double> f(&opNot, &opAnd, &opOr, &opThen, &opAgg, &opDefuzz);
 
 	// membership function
-	IsTriangle poor(-5, 0, 5);
-	IsTriangle good(0, 5, 10);
-	IsTriangle excellent(5, 10, 15);
+	IsTriangle<double> poor(-5, 0, 5);
+	IsTriangle<double> good(0, 5, 10);
+	IsTriangle<double> excellent(5, 10, 15);
 
-	IsTriangle cheap(0, 5, 10);
-	IsTriangle average(10, 15, 20);
-	IsTriangle generous(20, 25, 30);
+	IsTriangle<double> cheap(0, 5, 10);
+	IsTriangle<double> average(10, 15, 20);
+	IsTriangle<double> generous(20, 25, 30);
 
 	// values
-	ValueModel service(0);
-	ValueModel food(0);
-	ValueModel tips(0);
+	ValueModel<double> service(0);
+	ValueModel<double> food(0);
+	ValueModel<double> tips(0);
 
-	// TODO: test on factory
+	Expression<double>* r =
+			f.newAgg(
+					f.newAgg(
+							f.newThen( f.newIs(&service, &poor), f.newIs(&tips, &cheap) ),
+							f.newThen( f.newIs(&service, &good), f.newIs(&tips, &average) )
+							),
+					f.newThen(
+							f.newIs(&service, &excellent), f.newIs(&tips, &generous)
+							)
+			);
 
 	// defuzzification
-	/*Expression *system = f.NewDefuzz(&tips, r, 0, 25, 1);
+	Expression<double>* system = f.newDefuzz(&tips, r, 0, 25, 1);
 
+	// apply input
 	float s;
-	while (true) {
+	while (s >= 0) {
 		cout << "service: ";
 		cin >> s;
 		service.setValue(s);
-		cout << "tips-> " << system->evaluate() << endl;
+		cout << "tips -> " << system->evaluate() << endl;
 	}
-	 */
-
-	return 0;
 }

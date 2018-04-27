@@ -11,11 +11,14 @@ namespace core {
 	class UnaryExpressionModel : public UnaryExpression<T>, public Expression<T> {
 
 	public:
-		UnaryExpressionModel(UnaryExpression<T>*, Expression<T>*);
+		explicit UnaryExpressionModel(UnaryExpression<T>* = NULL, Expression<T>* = NULL);
 		virtual ~UnaryExpressionModel() = default;
 
 		T evaluate() const;
 		T evaluate(Expression<T>*) const;
+
+		virtual UnaryExpression<T>* getOperator() const;
+		virtual Expression<T>* getOperand() const;
 
 	private:
 		UnaryExpression<T>* _operator;
@@ -38,6 +41,16 @@ namespace core {
 	T UnaryExpressionModel<T>::evaluate(Expression<T> *o) const {
 		if (_operator == nullptr) throw NullOperatorException("missing operator", __LINE__);
 		return _operator->evaluate(o);
+	}
+
+	template<class T>
+	UnaryExpression<T> *UnaryExpressionModel<T>::getOperator() const {
+		return _operator;
+	}
+
+	template<class T>
+	Expression<T> *UnaryExpressionModel<T>::getOperand() const {
+		return _operand;
 	}
 
 }

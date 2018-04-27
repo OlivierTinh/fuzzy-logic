@@ -9,7 +9,7 @@ using namespace core;
 namespace fuzzy {
 
 	template <class T>
-	class ThenMult : Then<T> {
+	class ThenMult : public Then<T> {
 
 	public:
 		ThenMult() = default;

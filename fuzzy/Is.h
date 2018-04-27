@@ -8,7 +8,7 @@ using namespace core;
 namespace fuzzy {
 
 	template <class T>
-	class Is : UnaryExpression<T> {};
+	class Is : public UnaryExpression<T> {};
 
 }
 

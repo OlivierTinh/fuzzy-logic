@@ -9,7 +9,7 @@ using namespace core;
 namespace fuzzy {
 
 	template <class T>
-	class AggPlus : Agg<T> {
+	class AggPlus : public Agg<T> {
 
 	public:
 		AggPlus() = default;

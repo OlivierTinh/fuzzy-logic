@@ -12,7 +12,6 @@ namespace core {
 		UnaryExpression() = default;
 		virtual ~UnaryExpression() = default;
 
-	protected:
 		virtual T evaluate(Expression<T>*) const = 0;
 
 	};

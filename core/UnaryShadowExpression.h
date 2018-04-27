@@ -11,6 +11,7 @@ namespace core {
 
 	public:
 		UnaryShadowExpression() = default;
+		explicit UnaryShadowExpression(UnaryExpression<T>*);
 		virtual ~UnaryShadowExpression() = default;
 
 		virtual void setTarget(UnaryExpression<T>*);
@@ -19,6 +20,11 @@ namespace core {
 	private:
 		UnaryExpression<T>* _target;
 	};
+
+	template<class T>
+	UnaryShadowExpression<T>::UnaryShadowExpression(UnaryExpression<T>* target):
+	_target(target)
+	{}
 
 	template <class T>
 	void UnaryShadowExpression<T>::setTarget(UnaryExpression<T>* target) {
