@@ -2,7 +2,7 @@
 #define FUZZY_MAMDANIDEFUZZ_H
 
 #include "../core/BinaryExpression.h"
-#include "../Evaluator.h"
+#include "../utils/Evaluator.h"
 
 using namespace core;
 

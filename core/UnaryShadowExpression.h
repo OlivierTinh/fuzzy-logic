@@ -2,7 +2,7 @@
 #define FUZZY_UNARYSHADOWEXPRESSION_H
 
 #include "UnaryExpression.h"
-#include "../NullOperatorException.h"
+#include "../utils/NullOperatorException.h"
 
 namespace core {
 

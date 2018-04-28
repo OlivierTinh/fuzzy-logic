@@ -2,7 +2,7 @@
 #define FUZZY_BINARYSHADOWEXPRESSION_H
 
 #include "BinaryExpression.h"
-#include "../NullOperatorException.h"
+#include "../utils/NullOperatorException.h"
 
 namespace core {
 

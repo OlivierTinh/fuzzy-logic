@@ -3,25 +3,30 @@
 
 #include <vector>
 #include <ostream>
+#include "../core/Expression.h"
+#include "../core/ValueModel.h"
+
+using namespace core;
 
 template <class T>
 class Evaluator {
 
 public:
-	typedef std::pair< std::vector<T>, std::vector<T> > Shape;
+	typedef std::pair<std::vector<T>, std::vector<T>> Shape;
 
-	static Shape BuildShape(const T&, const T&, const T&, Expression<T>*, const Expression<T>*);
+	static Shape BuildShape(const T&, const T&, const T&, ValueModel<T>*, const Expression<T>*);
 	static std::ostream& PrintShape(std::ostream&, const Shape&);
 
 };
 
 template<class T>
-typename Evaluator<T>::Shape Evaluator<T>::BuildShape(const T& min, const T& max, const T& step, Expression<T>* value, const Expression<T>* e) {
+typename Evaluator<T>::Shape Evaluator<T>::BuildShape(const T& min, const T& max, const T& step, ValueModel<T>* value, const Expression<T>* e) {
 	std::vector<T> x, y;
 
 	for (T i = min; i <= max; i += step) {
-		x.push_back(value->evaluate());
-		y.push_back(e->evaluate());
+		value->setValue(i);
+		x.push_back(e->evaluate());
+		y.push_back(i);
 	}
 
 	return Shape(x, y);

@@ -21,28 +21,24 @@ namespace fuzzy {
 	};
 
 	template<class T>
-	T CogDefuzz<T>::evaluate(Expression<T> *l, Expression<T> *r) const {
+	T CogDefuzz<T>::evaluate(Expression<T> *value, Expression<T> *expression) const {
 		// TODO: la defuzz qu'on va utiliser dans FuzzyFactory
 		typename Evaluator<T>::Shape shape = Evaluator<T>::BuildShape(MamdaniDefuzz<T>::_min,
 		                                                              MamdaniDefuzz<T>::_max,
 		                                                              MamdaniDefuzz<T>::_step,
-		                                                              l, r);
+		                                                              (ValueModel<T>*) value,
+		                                                              expression);
 
-		typename std::vector<T> product;
-		typename std::vector<T>::const_iterator _x_ = shape.first.begin();
-		typename std::vector<T>::const_iterator _y_ = shape.second.begin();
+		T x, y, a = 0, b = 0;
 
-		for(; _y_ != shape.second.end(); ++_x_, ++_y_) {
-			T x = (*_x_);
-			T y = (*_y_);
-			product.push_back(x * y);
+		for (unsigned int i = 0; i < shape.first.size()-1; ++i) {
+			x = shape.first.at(i);
+			y = shape.second.at(i);
+			a += x * y;
+			b += y;
 		}
 
-		T sumProduct = 0;
-		T sumY = 0;
-
-		return std::accumulate(product.begin(), product.end(), sumProduct) /
-		       std::accumulate(shape.second.begin(), shape.second.end(), sumY);
+		return a/b;
 	}
 
 }

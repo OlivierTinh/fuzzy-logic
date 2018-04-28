@@ -2,7 +2,7 @@
 #define FUZZY_NARYSHADOWEXPRESSION_H
 
 #include "NaryExpression.h"
-#include "../NullOperatorException.h"
+#include "../utils/NullOperatorException.h"
 
 namespace core {
 
@@ -14,7 +14,7 @@ namespace core {
 		virtual ~NaryShadowExpression() = default;
 
 		virtual void setTarget(NaryExpression<T>*);
-		virtual T evaluate(Expression<T>**);
+		virtual T evaluate(std::vector<Expression<T>*> *);
 
 	private:
 		NaryExpression<T>* _target;
@@ -26,7 +26,7 @@ namespace core {
 	}
 
 	template<class T>
-	T NaryShadowExpression<T>::evaluate(Expression<T>** operands) {
+	T NaryShadowExpression<T>::evaluate(std::vector<Expression<T>*> *operands) {
 		if (_target == nullptr) throw NullOperatorException("missing target expression", __LINE__);
 		return _target->evaluate(operands);
 	}

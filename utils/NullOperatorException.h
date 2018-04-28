@@ -2,16 +2,15 @@
 #define FUZZY_NULLOPERATOREXCEPTION_H
 
 #include <iostream>
-#include <exception>
 #include <sstream>
 
 class NullOperatorException : public std::exception {
 
 public:
 	NullOperatorException(const char*, int);
-	~NullOperatorException() throw() override = default;
+	~NullOperatorException() noexcept override = default;
 
-	virtual const char* what() const throw() override {
+	const char* what() const noexcept override {
 		return this->_msg.c_str();
 	}
 

@@ -3,7 +3,7 @@
 
 #include "UnaryExpression.h"
 #include "Expression.h"
-#include "../NullOperatorException.h"
+#include "../utils/NullOperatorException.h"
 
 namespace core {
 
