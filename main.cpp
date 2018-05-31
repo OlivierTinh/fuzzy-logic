@@ -10,11 +10,17 @@
 #include "fuzzy/FuzzyFactory.h"
 #include "fuzzy/AggMax.h"
 
+void mamdaniDefuzzTest();
+
 using namespace std;
 using namespace core;
 using namespace fuzzy;
 
 int main() {
+	mamdaniDefuzzTest();
+}
+
+void mamdaniDefuzzTest() {
 	// operators
 	NotMinus<double> opNot;
 	AndMin<double> opAnd;
@@ -45,17 +51,17 @@ int main() {
 					f.newAgg(
 							f.newThen( f.newIs(&service, &poor), f.newIs(&tips, &cheap) ),
 							f.newThen( f.newIs(&service, &good), f.newIs(&tips, &average) )
-							),
+					),
 					f.newThen(
 							f.newIs(&service, &excellent), f.newIs(&tips, &generous)
-							)
+					)
 			);
 
 	// defuzzification
 	Expression<double>* system = f.newDefuzz(&tips, r, 0, 25, 1);
 
 	// apply input
-	float s;
+	float s = 0;
 	while (s >= 0) {
 		cout << "service: ";
 		cin >> s;
