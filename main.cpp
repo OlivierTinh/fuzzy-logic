@@ -9,8 +9,13 @@
 #include "fuzzy/IsTriangle.h"
 #include "fuzzy/FuzzyFactory.h"
 #include "fuzzy/AggMax.h"
+#include "fuzzy/AggPlus.h"
+#include "fuzzy/ThenMult.h"
+#include "fuzzy/AndMult.h"
 
 void mamdaniDefuzzTest();
+
+void sugenoDefuzzTest();
 
 using namespace std;
 using namespace core;
@@ -18,6 +23,7 @@ using namespace fuzzy;
 
 int main() {
 	mamdaniDefuzzTest();
+	sugenoDefuzzTest();
 }
 
 void mamdaniDefuzzTest() {
@@ -68,4 +74,14 @@ void mamdaniDefuzzTest() {
 		service.setValue(s);
 		cout << "tips -> " << system->evaluate() << endl;
 	}
+
+	void sugenoDefuzzTest() {
+		// TODO
+        AndMult<double> opAnd;
+        // Or probor
+		ThenMult<double> opMult;
+		AggPlus<double> opAgg;
+		// SugenoDefuzz
+	}
+
 }
