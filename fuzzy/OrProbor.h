@@ -23,7 +23,7 @@ namespace fuzzy {
     T OrProbor<T>::evaluate(Expression<T> *l, Expression<T> *r) const {
         T a = l->evaluate();
         T b = r->evaluate();
-        return (a + b - a * b);
+        return a + b - a * b;
     }
 
 }

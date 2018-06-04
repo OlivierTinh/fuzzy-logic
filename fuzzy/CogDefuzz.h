@@ -22,7 +22,6 @@ namespace fuzzy {
 
 	template<class T>
 	T CogDefuzz<T>::evaluate(Expression<T> *value, Expression<T> *expression) const {
-		// TODO: la defuzz qu'on va utiliser dans FuzzyFactory
 		typename Evaluator<T>::Shape shape = Evaluator<T>::BuildShape(MamdaniDefuzz<T>::_min,
 		                                                              MamdaniDefuzz<T>::_max,
 		                                                              MamdaniDefuzz<T>::_step,

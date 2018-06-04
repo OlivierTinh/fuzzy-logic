@@ -12,6 +12,8 @@
 #include "fuzzy/AggPlus.h"
 #include "fuzzy/ThenMult.h"
 #include "fuzzy/AndMult.h"
+#include "fuzzy/SugenoDefuzz.h"
+#include "fuzzy/OrProbor.h"
 
 void mamdaniDefuzzTest();
 
@@ -75,13 +77,14 @@ void mamdaniDefuzzTest() {
 		cout << "tips -> " << system->evaluate() << endl;
 	}
 
-	void sugenoDefuzzTest() {
-		// TODO
-        AndMult<double> opAnd;
-        // Or probor
-		ThenMult<double> opMult;
-		AggPlus<double> opAgg;
-		// SugenoDefuzz
-	}
-
 }
+
+void sugenoDefuzzTest() {
+	// TODO
+	AndMult<double> opAnd;
+	OrProbor<double> opOr;
+	ThenMult<double> opMult;
+	AggPlus<double> opAgg;
+	SugenoDefuzz<double> opDefuzz;
+}
+

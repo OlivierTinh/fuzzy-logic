@@ -11,6 +11,7 @@ namespace core {
 
 	public:
 		NaryShadowExpression() = default;
+		explicit NaryShadowExpression(NaryExpression<T>*);
 		virtual ~NaryShadowExpression() = default;
 
 		virtual void setTarget(NaryExpression<T>*);
@@ -19,6 +20,11 @@ namespace core {
 	private:
 		NaryExpression<T>* _target;
 	};
+
+	template<class T>
+	NaryShadowExpression<T>::NaryShadowExpression(NaryExpression<T>* target):
+	_target(target)
+	{}
 
 	template <class T>
 	void NaryShadowExpression<T>::setTarget(NaryExpression<T>* target) {

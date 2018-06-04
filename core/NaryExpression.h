@@ -13,7 +13,7 @@ namespace core {
 		NaryExpression() = default;
 		virtual ~NaryExpression() = default;
 
-		virtual T evaluate(std::vector<const Expression<T>*> *) const = 0;
+		virtual T evaluate(std::vector<Expression<T>*> *) const = 0;
 
 	};
 

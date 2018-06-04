@@ -11,6 +11,8 @@
 #include "Not.h"
 #include "MamdaniDefuzz.h"
 #include "AggMax.h"
+#include "SugenoDefuzz.h"
+#include "../core/NaryShadowExpression.h"
 
 using namespace core;
 
@@ -20,7 +22,7 @@ namespace fuzzy {
 	class FuzzyFactory : public ExpressionFactory<T> {
 
 	public:
-		FuzzyFactory()  = default;
+		FuzzyFactory() = default;
 		FuzzyFactory(
 				Not<T>* opNot,
 				And<T>* opAnd,
@@ -28,6 +30,13 @@ namespace fuzzy {
 				Then<T>* opThen,
 				Agg<T>* opAgg,
 				MamdaniDefuzz<T>* opDefuzz);
+        FuzzyFactory(
+                Not<T>* opNot,
+                And<T>* opAnd,
+                Or<T>* opOr,
+                Then<T>* opThen,
+                Agg<T>* opAgg,
+                SugenoDefuzz<T>* opDefuzz);
 		virtual ~FuzzyFactory() = default;
 
 		virtual Expression<T>* newAnd(Expression<T>*, Expression<T>*);
@@ -52,7 +61,8 @@ namespace fuzzy {
 		BinaryShadowExpression<T>* _or;
 		BinaryShadowExpression<T>* _then;
 		BinaryShadowExpression<T>* _agg;
-		BinaryShadowExpression<T>* _defuzz;
+		BinaryShadowExpression<T>* _mamdani;
+		NaryShadowExpression<T>* _sugeno;
 
 	};
 
@@ -65,7 +75,20 @@ namespace fuzzy {
 	_or(new BinaryShadowExpression<T>(opOr)),
 	_then(new BinaryShadowExpression<T>(opThen)),
 	_agg(new BinaryShadowExpression<T>(opAgg)),
-	_defuzz(new BinaryShadowExpression<T>(opDefuzz))
+	_mamdani(new BinaryShadowExpression<T>(opDefuzz))
+	{}
+
+	// TODO
+	template<class T>
+	FuzzyFactory<T>::FuzzyFactory(Not<T> *opNot, And<T> *opAnd,
+								  Or<T> *opOr, Then<T> *opThen,
+								  Agg<T> *opAgg, SugenoDefuzz<T> *opDefuzz):
+    _not(new UnaryShadowExpression<T>(opNot)),
+    _and(new BinaryShadowExpression<T>(opAnd)),
+    _or(new BinaryShadowExpression<T>(opOr)),
+    _then(new BinaryShadowExpression<T>(opThen)),
+    _agg(new BinaryShadowExpression<T>(opAgg)),
+    _sugeno(new NaryShadowExpression<T>(opDefuzz))
 	{}
 
 	template<class T>
@@ -90,11 +113,11 @@ namespace fuzzy {
 
 	template<class T>
 	Expression<T> *FuzzyFactory<T>::newDefuzz(Expression<T>* l, Expression<T>* r, const T& min, const T& max, const T& step) {
-		auto* mamdani = (MamdaniDefuzz<T>*) _defuzz->getTarget();
+		auto* mamdani = (MamdaniDefuzz<T>*) _mamdani->getTarget();
 		mamdani->setMin(min);
 		mamdani->setMax(max);
 		mamdani->setStep(step);
-		return this->newBinary(_defuzz, l, r);
+		return this->newBinary(_mamdani, l, r);
 	}
 
 	template<class T>
