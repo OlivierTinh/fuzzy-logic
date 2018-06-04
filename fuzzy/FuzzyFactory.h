@@ -78,7 +78,6 @@ namespace fuzzy {
 	_mamdani(new BinaryShadowExpression<T>(opDefuzz))
 	{}
 
-	// TODO
 	template<class T>
 	FuzzyFactory<T>::FuzzyFactory(Not<T> *opNot, And<T> *opAnd,
 								  Or<T> *opOr, Then<T> *opThen,

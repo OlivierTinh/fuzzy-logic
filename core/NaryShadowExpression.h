@@ -15,7 +15,7 @@ namespace core {
 		virtual ~NaryShadowExpression() = default;
 
 		virtual void setTarget(NaryExpression<T>*);
-		virtual T evaluate(std::vector<Expression<T>*> *);
+		virtual T evaluate(std::vector<Expression<T>*> *) const;
 
 	private:
 		NaryExpression<T>* _target;
@@ -32,7 +32,7 @@ namespace core {
 	}
 
 	template<class T>
-	T NaryShadowExpression<T>::evaluate(std::vector<Expression<T>*> *operands) {
+	T NaryShadowExpression<T>::evaluate(std::vector<Expression<T>*> *operands) const {
 		if (_target == nullptr) throw NullOperatorException("missing target expression", __LINE__);
 		return _target->evaluate(operands);
 	}

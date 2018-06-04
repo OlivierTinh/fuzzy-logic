@@ -20,6 +20,10 @@ namespace fuzzy {
 
 	};
 
+	/*
+	 * Évaluation pour la defuzzification de type `Center of Gravity`
+	 * Retourne (somme x_i * y_i) / (somme y_i)
+	 * */
 	template<class T>
 	T CogDefuzz<T>::evaluate(Expression<T> *value, Expression<T> *expression) const {
 		typename Evaluator<T>::Shape shape = Evaluator<T>::BuildShape(MamdaniDefuzz<T>::_min,

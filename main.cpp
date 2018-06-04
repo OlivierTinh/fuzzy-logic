@@ -25,66 +25,95 @@ using namespace fuzzy;
 
 int main() {
 	mamdaniDefuzzTest();
-	sugenoDefuzzTest();
+	// sugenoDefuzzTest();
 }
 
 void mamdaniDefuzzTest() {
 	// operators
-	NotMinus<double> opNot;
-	AndMin<double> opAnd;
-	OrMax<double> opOr;
-	ThenMin<double> opThen;
-	AggMax<double> opAgg;
-	CogDefuzz<double> opDefuzz;
+	NotMinus<float> opNot;
+	AndMin<float> opAnd;
+	OrMax<float> opOr;
+	ThenMin<float> opThen;
+	AggMax<float> opAgg;
+	CogDefuzz<float> opDefuzz;
 
 	// fuzzy expression factory
-	FuzzyFactory<double> f(&opNot, &opAnd, &opOr, &opThen, &opAgg, &opDefuzz);
+	FuzzyFactory<float> f(&opNot, &opAnd, &opOr, &opThen, &opAgg, &opDefuzz);
 
 	// membership function
-	IsTriangle<double> poor(-5, 0, 5);
-	IsTriangle<double> good(0, 5, 10);
-	IsTriangle<double> excellent(5, 10, 15);
+	IsTriangle<float> poor(-5, 0, 5);
+	IsTriangle<float> good(0, 5, 10);
+	IsTriangle<float> excellent(5, 10, 15);
 
-	IsTriangle<double> cheap(0, 5, 10);
-	IsTriangle<double> average(10, 15, 20);
-	IsTriangle<double> generous(20, 25, 30);
+	IsTriangle<float> rancid(-5, 0, 5);
+	IsTriangle<float> delicious(5, 10, 15);
+
+	IsTriangle<float> cheap(0, 5, 10);
+	IsTriangle<float> average(10, 15, 20);
+	IsTriangle<float> generous(20, 25, 30);
 
 	// values
-	ValueModel<double> service(0);
-	ValueModel<double> food(0);
-	ValueModel<double> tips(0);
+	ValueModel<float> service(0);
+	ValueModel<float> food(0);
+	ValueModel<float> tips(0);
 
-	Expression<double>* r =
+	Expression<float>* r =
 			f.newAgg(
 					f.newAgg(
-							f.newThen( f.newIs(&service, &poor), f.newIs(&tips, &cheap) ),
-							f.newThen( f.newIs(&service, &good), f.newIs(&tips, &average) )
+							f.newThen(
+									f.newOr(
+											f.newIs(&service, &poor),
+                                            f.newIs(&food, &rancid)
+											),
+									 f.newIs(&tips, &cheap)
+							),
+							f.newThen(
+									f.newIs(&service, &good),
+									f.newIs(&tips, &average)
+							)
 					),
 					f.newThen(
-							f.newIs(&service, &excellent), f.newIs(&tips, &generous)
+							f.newOr(
+									f.newIs(&service, &excellent),
+									f.newIs(&food, &delicious)
+							),
+							 f.newIs(&tips, &generous)
 					)
 			);
 
 	// defuzzification
-	Expression<double>* system = f.newDefuzz(&tips, r, 0, 25, 1);
+	Expression<float>* system = f.newDefuzz(&tips, r, 0, 25, 1);
 
 	// apply input
-	float s = 0;
-	while (s >= 0) {
+	float _service = 0, _food = 0;
+	while (true) {
 		cout << "service: ";
-		cin >> s;
-		service.setValue(s);
+		cin >> _service;
+		if (_service < 0) break;
+		service.setValue(_service);
+
+		cout << "food: ";
+		cin >> _food;
+		if (_food < 0) break;
+		food.setValue(_food);
+
 		cout << "tips -> " << system->evaluate() << endl;
 	}
 
 }
 
+// TODO: Finir Sugeno
 void sugenoDefuzzTest() {
-	// TODO
+	NotMinus<double> opNot;
 	AndMult<double> opAnd;
 	OrProbor<double> opOr;
-	ThenMult<double> opMult;
+	ThenMult<double> opThen;
 	AggPlus<double> opAgg;
 	SugenoDefuzz<double> opDefuzz;
+
+	FuzzyFactory<double> f(&opNot, &opAnd, &opOr, &opThen, &opAgg, &opDefuzz);
+
+
+
 }
 
