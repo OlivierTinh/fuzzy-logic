@@ -15,7 +15,7 @@ namespace fuzzy {
 		SugenoConclusion() = default;
 		virtual ~SugenoConclusion() = default;
 
-		virtual T evaluate(std::vector<const Expression<T>*>*) const;
+		virtual T evaluate(std::vector<Expression<T>*>*) const;
 
 	private:
 		const std::vector<T>* coeff;
@@ -23,7 +23,7 @@ namespace fuzzy {
 	};
 
 	template<class T>
-	T SugenoConclusion<T>::evaluate(std::vector<const Expression<T> *> *operands) const {
+	T SugenoConclusion<T>::evaluate(std::vector<Expression<T> *> *operands) const {
 		T output = 0;
 
 		// TODO: calcul somme wi.zi / wi

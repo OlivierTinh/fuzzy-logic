@@ -29,7 +29,7 @@ int main() {
 }
 
 void mamdaniFuzzyTest() {
-    cout << "--- Mamdani ---" << endl;
+	cout << "--- Mamdani ---" << endl;
 
 	// operators
 	NotMinus<float> opNot;
@@ -59,15 +59,15 @@ void mamdaniFuzzyTest() {
 	ValueModel<float> food(0);
 	ValueModel<float> tips(0);
 
-	Expression<float>* r =
+	Expression<float> *r =
 			f.newAgg(
 					f.newAgg(
 							f.newThen(
 									f.newOr(
 											f.newIs(&service, &poor),
-                                            f.newIs(&food, &rancid)
-											),
-									 f.newIs(&tips, &cheap)
+											f.newIs(&food, &rancid)
+									),
+									f.newIs(&tips, &cheap)
 							),
 							f.newThen(
 									f.newIs(&service, &good),
@@ -79,12 +79,12 @@ void mamdaniFuzzyTest() {
 									f.newIs(&service, &excellent),
 									f.newIs(&food, &delicious)
 							),
-							 f.newIs(&tips, &generous)
+							f.newIs(&tips, &generous)
 					)
 			);
 
 	// defuzzification
-	Expression<float>* system = f.newDefuzz(&tips, r, 0, 25, 1);
+	Expression<float> *system = f.newDefuzz(&tips, r, 0, 25, 1);
 
 	// apply input
 	float _service = 0, _food = 0;
@@ -106,16 +106,17 @@ void mamdaniFuzzyTest() {
 
 // TODO: Finir Sugeno
 void sugenoFuzzyTest() {
-    cout << "--- Sugeno ---" << endl;
+	cout << "--- Sugeno ---" << endl;
 
 	NotMinus<float> opNot;
 	AndMult<float> opAnd;
 	OrProbor<float> opOr;
-	ThenMult<float> opThen;
+	SugenoThen<float> opThen;
 	AggPlus<float> opAgg;
 	SugenoDefuzz<float> opDefuzz;
+	SugenoConclusion<float> opConclusion;
 
-	FuzzyFactory<float> f(&opNot, &opAnd, &opOr, &opThen, &opAgg, &opDefuzz);
+	FuzzyFactory<float> f(&opNot, &opAnd, &opOr, &opThen, &opAgg, &opDefuzz, &opConclusion);
 
 	IsTriangle<float> poor(-5, 0, 5);
 	IsTriangle<float> good(0, 5, 10);
@@ -130,10 +131,19 @@ void sugenoFuzzyTest() {
 
 	ValueModel<float> service(0);
 	ValueModel<float> food(0);
-	ValueModel<float> tips(0);
+	std::vector<Expression<float>*> tips;
 
-	vector<Expression<float>> r;
+	vector<Expression<float>*> r;
+	r.push_back(
+			f.newSugenoThen(
+					f.newOr(
+							f.newIs(&service, &poor),
+							f.newIs(&food, &rancid)
+					),
+					f.newConclusion(&tips)
+			)
+	);
 
-	Expression<float>* system = f.newSugeno();
+	Expression<float> *system = f.newSugeno();
 }
 

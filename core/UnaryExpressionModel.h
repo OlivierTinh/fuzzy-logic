@@ -4,6 +4,7 @@
 #include "UnaryExpression.h"
 #include "Expression.h"
 #include "../utils/NullOperatorException.h"
+#include "../utils/NullOperandException.h"
 
 namespace core {
 
@@ -33,7 +34,7 @@ namespace core {
 
 	template <class T>
 	T UnaryExpressionModel<T>::evaluate() const {
-		if (_operand == nullptr) throw NullOperatorException("missing operand", __LINE__);
+		if (_operand == nullptr) throw NullOperandException("missing operand", __LINE__);
 		return evaluate(_operand);
 	}
 

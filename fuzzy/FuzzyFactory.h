@@ -13,6 +13,8 @@
 #include "AggMax.h"
 #include "SugenoDefuzz.h"
 #include "../core/NaryShadowExpression.h"
+#include "SugenoThen.h"
+#include "SugenoConclusion.h"
 
 using namespace core;
 
@@ -34,19 +36,22 @@ namespace fuzzy {
                 Not<T>* opNot,
                 And<T>* opAnd,
                 Or<T>* opOr,
-                Then<T>* opThen,
+                SugenoThen<T>* opThen,
                 Agg<T>* opAgg,
-                SugenoDefuzz<T>* opDefuzz);
+                SugenoDefuzz<T>* opDefuzz,
+				SugenoConclusion<T>* opConclusion);
 		virtual ~FuzzyFactory() = default;
 
 		virtual Expression<T>* newAnd(Expression<T>*, Expression<T>*);
 		virtual Expression<T>* newOr(Expression<T>*, Expression<T>*);
 		virtual Expression<T>* newThen(Expression<T>*, Expression<T>*);
+		virtual Expression<T>* newSugenoThen(Expression<T>*, Expression<T>*);
 		virtual Expression<T>* newAgg(Expression<T>*, Expression<T>*);
 		virtual Expression<T>* newDefuzz(Expression<T>*, Expression<T>*, const T&, const T&, const T&);
         virtual Expression<T>* newSugeno();
 		virtual Expression<T>* newNot(Expression<T>*);
 		virtual Expression<T>* newIs(Expression<T>*, Is<T>*);
+		virtual Expression<T>* newConclusion(std::vector<Expression<T>*> *);
 
 		virtual void changeAnd(And<T>*);
 		virtual void changeOr(Or<T>*);
@@ -62,9 +67,11 @@ namespace fuzzy {
 		BinaryShadowExpression<T>* _and;
 		BinaryShadowExpression<T>* _or;
 		BinaryShadowExpression<T>* _then;
+		BinaryShadowExpression<T>* _sugenoThen;
 		BinaryShadowExpression<T>* _agg;
 		BinaryShadowExpression<T>* _mamdani;
 		NaryShadowExpression<T>* _sugeno;
+		NaryShadowExpression<T>* _conclusion;
 
 	};
 
@@ -82,14 +89,16 @@ namespace fuzzy {
 
 	template<class T>
 	FuzzyFactory<T>::FuzzyFactory(Not<T> *opNot, And<T> *opAnd,
-								  Or<T> *opOr, Then<T> *opThen,
-								  Agg<T> *opAgg, SugenoDefuzz<T> *opDefuzz):
+								  Or<T> *opOr, SugenoThen<T> *opThen,
+								  Agg<T> *opAgg, SugenoDefuzz<T> *opDefuzz,
+								  SugenoConclusion<T> *opConclusion):
     _not(new UnaryShadowExpression<T>(opNot)),
     _and(new BinaryShadowExpression<T>(opAnd)),
     _or(new BinaryShadowExpression<T>(opOr)),
-    _then(new BinaryShadowExpression<T>(opThen)),
+    _sugenoThen(new BinaryShadowExpression<T>(opThen)),
     _agg(new BinaryShadowExpression<T>(opAgg)),
-    _sugeno(new NaryShadowExpression<T>(opDefuzz))
+    _sugeno(new NaryShadowExpression<T>(opDefuzz)),
+	_conclusion(new NaryShadowExpression<T>(opConclusion))
 	{}
 
 	template<class T>
@@ -105,6 +114,11 @@ namespace fuzzy {
 	template<class T>
 	Expression<T> *FuzzyFactory<T>::newThen(Expression<T>* l, Expression<T>* r) {
 		return this->newBinary(_then, l, r);
+	}
+
+	template<class T>
+	Expression<T> *FuzzyFactory<T>::newSugenoThen(Expression<T>* l, Expression<T>* r) {
+	    return this->newBinary(_sugenoThen, l, r);
 	}
 
 	template<class T>
@@ -135,6 +149,11 @@ namespace fuzzy {
 	template<class T>
 	Expression<T> *FuzzyFactory<T>::newIs(Expression<T>* o, Is<T>* is) {
 		return this->newUnary(is, o);
+	}
+
+	template<class T>
+	Expression<T> *FuzzyFactory<T>::newConclusion(std::vector<Expression<T> *> *operands) {
+	    return this->newNary(_conclusion, operands);
 	}
 
 	template<class T>
