@@ -23,7 +23,7 @@ namespace fuzzy {
 	};
 
 	template<class T>
-	T SugenoConclusion<T>::evaluate(std::vector<const Expression<T> *> *) const {
+	T SugenoConclusion<T>::evaluate(std::vector<const Expression<T> *> *operands) const {
 		T output = 0;
 
 		// TODO: calcul somme wi.zi / wi

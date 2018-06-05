@@ -44,7 +44,7 @@ namespace fuzzy {
 		virtual Expression<T>* newThen(Expression<T>*, Expression<T>*);
 		virtual Expression<T>* newAgg(Expression<T>*, Expression<T>*);
 		virtual Expression<T>* newDefuzz(Expression<T>*, Expression<T>*, const T&, const T&, const T&);
-        //virtual Expression<T>* newSugeno();
+        virtual Expression<T>* newSugeno();
 		virtual Expression<T>* newNot(Expression<T>*);
 		virtual Expression<T>* newIs(Expression<T>*, Is<T>*);
 
@@ -119,6 +119,12 @@ namespace fuzzy {
 		mamdani->setMax(max);
 		mamdani->setStep(step);
 		return this->newBinary(_mamdani, l, r);
+	}
+
+	template<class T>
+	Expression<T> *FuzzyFactory<T>::newSugeno() {
+	    // TODO
+		return nullptr;
 	}
 
 	template<class T>

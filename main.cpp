@@ -15,20 +15,20 @@
 #include "fuzzy/SugenoDefuzz.h"
 #include "fuzzy/OrProbor.h"
 
-void mamdaniDefuzzTest();
+void mamdaniFuzzyTest();
 
-void sugenoDefuzzTest();
+void sugenoFuzzyTest();
 
 using namespace std;
 using namespace core;
 using namespace fuzzy;
 
 int main() {
-	mamdaniDefuzzTest();
-	// sugenoDefuzzTest();
+	mamdaniFuzzyTest();
+	// sugenoFuzzyTest();
 }
 
-void mamdaniDefuzzTest() {
+void mamdaniFuzzyTest() {
     cout << "--- Mamdani ---" << endl;
 
 	// operators
@@ -105,19 +105,35 @@ void mamdaniDefuzzTest() {
 }
 
 // TODO: Finir Sugeno
-void sugenoDefuzzTest() {
+void sugenoFuzzyTest() {
     cout << "--- Sugeno ---" << endl;
 
-	NotMinus<double> opNot;
-	AndMult<double> opAnd;
-	OrProbor<double> opOr;
-	ThenMult<double> opThen;
-	AggPlus<double> opAgg;
-	SugenoDefuzz<double> opDefuzz;
+	NotMinus<float> opNot;
+	AndMult<float> opAnd;
+	OrProbor<float> opOr;
+	ThenMult<float> opThen;
+	AggPlus<float> opAgg;
+	SugenoDefuzz<float> opDefuzz;
 
-	FuzzyFactory<double> f(&opNot, &opAnd, &opOr, &opThen, &opAgg, &opDefuzz);
+	FuzzyFactory<float> f(&opNot, &opAnd, &opOr, &opThen, &opAgg, &opDefuzz);
 
+	IsTriangle<float> poor(-5, 0, 5);
+	IsTriangle<float> good(0, 5, 10);
+	IsTriangle<float> excellent(5, 10, 15);
 
+	IsTriangle<float> rancid(-5, 0, 5);
+	IsTriangle<float> delicious(5, 10, 15);
 
+	IsTriangle<float> cheap(0, 5, 10);
+	IsTriangle<float> average(10, 15, 20);
+	IsTriangle<float> generous(20, 25, 30);
+
+	ValueModel<float> service(0);
+	ValueModel<float> food(0);
+	ValueModel<float> tips(0);
+
+	vector<Expression<float>> r;
+
+	Expression<float>* system = f.newSugeno();
 }
 

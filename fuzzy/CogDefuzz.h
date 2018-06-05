@@ -36,7 +36,7 @@ namespace fuzzy {
 
 		for (unsigned int i = shape.second.at(0); i < shape.second.size(); ++i) {
 			weighted_sum += shape.first.at(i) * i;
-			sum += i;
+			sum += shape.first.at(i);
 		}
 
 		return weighted_sum/sum;
