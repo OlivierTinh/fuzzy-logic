@@ -44,6 +44,7 @@ namespace fuzzy {
 		virtual Expression<T>* newThen(Expression<T>*, Expression<T>*);
 		virtual Expression<T>* newAgg(Expression<T>*, Expression<T>*);
 		virtual Expression<T>* newDefuzz(Expression<T>*, Expression<T>*, const T&, const T&, const T&);
+        //virtual Expression<T>* newSugeno();
 		virtual Expression<T>* newNot(Expression<T>*);
 		virtual Expression<T>* newIs(Expression<T>*, Is<T>*);
 

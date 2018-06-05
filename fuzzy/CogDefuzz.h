@@ -34,11 +34,9 @@ namespace fuzzy {
 
 		T x, y, weighted_sum = 0, sum = 0;
 
-		for (unsigned int i = 0; i < shape.first.size(); ++i) {
-			x = shape.first.at(i);
-			y = shape.second.at(i);
-			weighted_sum += x * y;
-			sum += y;
+		for (unsigned int i = shape.second.at(0); i < shape.second.size(); ++i) {
+			weighted_sum += shape.first.at(i) * i;
+			sum += i;
 		}
 
 		return weighted_sum/sum;
