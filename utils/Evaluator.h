@@ -19,6 +19,11 @@ public:
 
 };
 
+/**
+ *	Retourne un Shape contenant
+ *	1. la valeur de l'expression entrée en paramètre
+ *	2. sa position y
+ */
 template<class T>
 typename Evaluator<T>::Shape Evaluator<T>::BuildShape(const T& min, const T& max, const T& step, ValueModel<T>* value, const Expression<T>* e) {
 	std::vector<T> x, y;

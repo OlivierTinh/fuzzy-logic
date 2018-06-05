@@ -20,7 +20,7 @@ namespace fuzzy {
 
 	};
 
-	/*
+	/**
 	 * Évaluation pour la defuzzification de type `Center of Gravity`
 	 * Retourne (somme x_i * y_i) / (somme y_i)
 	 * */
@@ -32,26 +32,18 @@ namespace fuzzy {
 		                                                              (ValueModel<T>*) value,
 		                                                              expression);
 
-		T x, y, a = 0, b = 0;
+		T x, y, weighted_sum = 0, sum = 0;
 
-		for (unsigned int i = 0; i < shape.first.size()-1; ++i) {
+		for (unsigned int i = 0; i < shape.first.size(); ++i) {
 			x = shape.first.at(i);
 			y = shape.second.at(i);
-			a += x * y;
-			b += y;
+			weighted_sum += x * y;
+			sum += y;
 		}
 
-		return a/b;
+		return weighted_sum/sum;
 	}
 
 }
 
 #endif //FUZZY_COGDEFUZZ_H
-
-/*
- * x intervalle à définir
- * min, max, step
- * sortie + règle d'agrégation
- *
- *
- * */

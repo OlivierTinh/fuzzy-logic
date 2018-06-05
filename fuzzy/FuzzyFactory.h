@@ -51,7 +51,8 @@ namespace fuzzy {
 		virtual void changeOr(Or<T>&);
 		virtual void changeThen(Then<T>&);
 		virtual void changeAgg(Agg<T>&);
-		// virtual void changeDefuzz(Defuzz<T>&);
+		virtual void changeMamdani(MamdaniDefuzz<T> &);
+		virtual void changeSugeno(SugenoDefuzz<T> &);
 		virtual void changeNot(Not<T>&);
 
 	private:
@@ -147,6 +148,16 @@ namespace fuzzy {
 	template<class T>
 	void FuzzyFactory<T>::changeAgg(Agg<T>& o) {
 		_agg->setTarget(&o);
+	}
+
+	template<class T>
+	void FuzzyFactory<T>::changeMamdani(MamdaniDefuzz<T>& o) {
+		_mamdani->setTarget(&o);
+	}
+
+	template<class T>
+	void FuzzyFactory<T>::changeSugeno(SugenoDefuzz<T>& o) {
+		_sugeno->setTarget(&o);
 	}
 
 	template<class T>
