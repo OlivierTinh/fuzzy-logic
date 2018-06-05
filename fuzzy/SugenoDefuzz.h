@@ -36,8 +36,6 @@ namespace fuzzy {
 
 		if (b == 0) throw DivideByZeroException("cannot divide by zero", __LINE__);
 
-		std::cout << "a: " << a << "\nb: " << b << std::endl;
-
 		return a/b;
 	}
 

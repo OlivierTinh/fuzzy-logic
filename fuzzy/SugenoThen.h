@@ -24,9 +24,8 @@ namespace fuzzy {
 
     template<class T>
     T SugenoThen<T>::evaluate(Expression<T>* l, Expression<T>* r) const {
-        T left = l->evaluate();
-        T right = r->evaluate();
-        return _premiseValue = left * right;
+        _premiseValue = l->evaluate();
+        return _premiseValue * r->evaluate();
     }
 
     template<class T>

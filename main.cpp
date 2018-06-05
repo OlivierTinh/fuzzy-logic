@@ -24,8 +24,14 @@ using namespace core;
 using namespace fuzzy;
 
 int main() {
-	mamdaniFuzzyTest();
-	sugenoFuzzyTest();
+
+	int mode;
+	cout << "Mode: ";
+	cin >> mode;
+
+	if (mode == 0)  mamdaniFuzzyTest();
+	else			sugenoFuzzyTest();
+
 }
 
 void mamdaniFuzzyTest() {
