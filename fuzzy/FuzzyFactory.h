@@ -47,13 +47,13 @@ namespace fuzzy {
 		virtual Expression<T>* newNot(Expression<T>*);
 		virtual Expression<T>* newIs(Expression<T>*, Is<T>*);
 
-		virtual void changeAnd(And<T>&);
-		virtual void changeOr(Or<T>&);
-		virtual void changeThen(Then<T>&);
-		virtual void changeAgg(Agg<T>&);
-		virtual void changeMamdani(MamdaniDefuzz<T> &);
-		virtual void changeSugeno(SugenoDefuzz<T> &);
-		virtual void changeNot(Not<T>&);
+		virtual void changeAnd(And<T>*);
+		virtual void changeOr(Or<T>*);
+		virtual void changeThen(Then<T>*);
+		virtual void changeAgg(Agg<T>*);
+		virtual void changeMamdani(MamdaniDefuzz<T>*);
+		virtual void changeSugeno(SugenoDefuzz<T>*);
+		virtual void changeNot(Not<T>*);
 
 	private:
 		UnaryShadowExpression<T>*  _not;
@@ -131,38 +131,38 @@ namespace fuzzy {
 	}
 
 	template<class T>
-	void FuzzyFactory<T>::changeAnd(And<T>& o) {
-		_and->setTarget(&o);
+	void FuzzyFactory<T>::changeAnd(And<T>* o) {
+		_and->setTarget(o);
 	}
 
 	template<class T>
-	void FuzzyFactory<T>::changeOr(Or<T>& o) {
-		_or->setTarget(&o);
+	void FuzzyFactory<T>::changeOr(Or<T>* o) {
+		_or->setTarget(o);
 	}
 
 	template<class T>
-	void FuzzyFactory<T>::changeThen(Then<T>& o) {
-		_then->setTarget(&o);
+	void FuzzyFactory<T>::changeThen(Then<T>* o) {
+		_then->setTarget(o);
 	}
 
 	template<class T>
-	void FuzzyFactory<T>::changeAgg(Agg<T>& o) {
-		_agg->setTarget(&o);
+	void FuzzyFactory<T>::changeAgg(Agg<T>* o) {
+		_agg->setTarget(o);
 	}
 
 	template<class T>
-	void FuzzyFactory<T>::changeMamdani(MamdaniDefuzz<T>& o) {
-		_mamdani->setTarget(&o);
+	void FuzzyFactory<T>::changeMamdani(MamdaniDefuzz<T>* o) {
+		_mamdani->setTarget(o);
 	}
 
 	template<class T>
-	void FuzzyFactory<T>::changeSugeno(SugenoDefuzz<T>& o) {
-		_sugeno->setTarget(&o);
+	void FuzzyFactory<T>::changeSugeno(SugenoDefuzz<T>* o) {
+		_sugeno->setTarget(o);
 	}
 
 	template<class T>
-	void FuzzyFactory<T>::changeNot(Not<T>& o) {
-		_not->setTarget(&o);
+	void FuzzyFactory<T>::changeNot(Not<T>* o) {
+		_not->setTarget(o);
 	}
 
 }
