@@ -13,7 +13,6 @@ namespace fuzzy {
 
 	public:
 		MamdaniDefuzz();
-		MamdaniDefuzz(const T& min, const T& max, const T& step);
 		virtual ~MamdaniDefuzz() = default;
 
 		virtual T evaluate(Expression<T>*, Expression<T>*) const = 0;
@@ -29,11 +28,6 @@ namespace fuzzy {
 	template<class T>
 	MamdaniDefuzz<T>::MamdaniDefuzz():
 	_min(0), _max(0), _step(0)
-	{}
-
-	template<class T>
-	MamdaniDefuzz<T>::MamdaniDefuzz(const T& min, const T& max, const T& step):
-	_min(min), _max(max), _step(step)
 	{}
 
 	template<class T>

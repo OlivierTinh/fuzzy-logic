@@ -29,6 +29,8 @@ int main() {
 }
 
 void mamdaniDefuzzTest() {
+    cout << "--- Mamdani ---" << endl;
+
 	// operators
 	NotMinus<float> opNot;
 	AndMin<float> opAnd;
@@ -104,6 +106,8 @@ void mamdaniDefuzzTest() {
 
 // TODO: Finir Sugeno
 void sugenoDefuzzTest() {
+    cout << "--- Sugeno ---" << endl;
+
 	NotMinus<double> opNot;
 	AndMult<double> opAnd;
 	OrProbor<double> opOr;
