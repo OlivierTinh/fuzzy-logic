@@ -58,8 +58,8 @@ namespace core {
 	}
 
 	template<class T>
-	Expression<T> *ExpressionFactory<T>::newNary(NaryExpression<T> *ope, std::vector<Expression<T> *> *o) {
-	    return hold(new NaryExpressionModel<T>(ope, o));
+	Expression<T> *ExpressionFactory<T>::newNary(NaryExpression<T> *ope, std::vector<Expression<T> *> *operands) {
+	    return hold(new NaryExpressionModel<T>(ope, operands));
 	}
 
 	template<class T>

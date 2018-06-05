@@ -48,7 +48,7 @@ namespace fuzzy {
 		virtual Expression<T>* newSugenoThen(Expression<T>*, Expression<T>*);
 		virtual Expression<T>* newAgg(Expression<T>*, Expression<T>*);
 		virtual Expression<T>* newDefuzz(Expression<T>*, Expression<T>*, const T&, const T&, const T&);
-        virtual Expression<T>* newSugeno();
+        virtual Expression<T>* newSugeno(std::vector<Expression<T>*>*);
 		virtual Expression<T>* newNot(Expression<T>*);
 		virtual Expression<T>* newIs(Expression<T>*, Is<T>*);
 		virtual Expression<T>* newConclusion(std::vector<Expression<T>*> *);
@@ -136,9 +136,8 @@ namespace fuzzy {
 	}
 
 	template<class T>
-	Expression<T> *FuzzyFactory<T>::newSugeno() {
-	    // TODO
-		return nullptr;
+	Expression<T> *FuzzyFactory<T>::newSugeno(std::vector<Expression<T>*> *operands) {
+		return this->newNary(_sugeno, operands);
 	}
 
 	template<class T>

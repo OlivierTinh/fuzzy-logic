@@ -25,7 +25,7 @@ using namespace fuzzy;
 
 int main() {
 	mamdaniFuzzyTest();
-	// sugenoFuzzyTest();
+	sugenoFuzzyTest();
 }
 
 void mamdaniFuzzyTest() {
@@ -104,7 +104,6 @@ void mamdaniFuzzyTest() {
 
 }
 
-// TODO: Finir Sugeno
 void sugenoFuzzyTest() {
 	cout << "--- Sugeno ---" << endl;
 
@@ -114,7 +113,12 @@ void sugenoFuzzyTest() {
 	SugenoThen<float> opThen;
 	AggPlus<float> opAgg;
 	SugenoDefuzz<float> opDefuzz;
-	SugenoConclusion<float> opConclusion;
+
+	std::vector<float> coef;
+	coef.push_back(1);
+	coef.push_back(1);
+	coef.push_back(1);
+	SugenoConclusion<float> opConclusion = SugenoConclusion<float>(&coef);
 
 	FuzzyFactory<float> f(&opNot, &opAnd, &opOr, &opThen, &opAgg, &opDefuzz, &opConclusion);
 
@@ -131,7 +135,13 @@ void sugenoFuzzyTest() {
 
 	ValueModel<float> service(0);
 	ValueModel<float> food(0);
-	std::vector<Expression<float>*> tips;
+
+	std::vector<Expression<float>*> output_service_food;
+	output_service_food.push_back(&service);
+	output_service_food.push_back(&food);
+
+	std::vector<Expression<float>*> output_service;
+	output_service.push_back(&service);
 
 	vector<Expression<float>*> r;
 	r.push_back(
@@ -140,10 +150,42 @@ void sugenoFuzzyTest() {
 							f.newIs(&service, &poor),
 							f.newIs(&food, &rancid)
 					),
-					f.newConclusion(&tips)
+					f.newConclusion(&output_service_food)
 			)
 	);
 
-	Expression<float> *system = f.newSugeno();
+	r.push_back(
+			f.newSugenoThen(
+					f.newIs(&service, &good),
+					f.newConclusion(&output_service)
+			)
+	);
+
+	r.push_back(
+			f.newSugenoThen(
+					f.newOr(
+							f.newIs(&service, &excellent),
+							f.newIs(&service, &delicious)
+					),
+					f.newConclusion(&output_service_food)
+			)
+	);
+
+	Expression<float> *system = f.newSugeno(&r);
+
+	float _service = 0, _food = 0;
+	while (true) {
+		cout << "service: ";
+		cin >> _service;
+		if (_service < 0) break;
+		service.setValue(_service);
+
+		cout << "food: ";
+		cin >> _food;
+		if (_food < 0) break;
+		food.setValue(_food);
+
+		cout << "tips -> " << system->evaluate() << endl;
+	}
 }
 
